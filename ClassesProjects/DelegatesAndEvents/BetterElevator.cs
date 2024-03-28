@@ -1,6 +1,14 @@
 ﻿namespace DelegatesAndEvents
 {
-    public record FloorReachedEventArgs (int CurrentFloor, string FloorStatus);
+    public class FloorReachedEventArgs
+    {
+        public int CurrentFloor { get; }
+
+        public FloorReachedEventArgs(int currentFloor)
+        {
+            CurrentFloor = currentFloor;
+        }
+    }
     //Expand BetterElevator: add Elevator status, add kind of floor (intermediary or destination), include this 
     //information in the FloorReachedEventArgs
 
@@ -10,8 +18,6 @@
         public EventHandler<FloorReachedEventArgs> FloorReachedEvent;
 
         public int CurrentFloor { get; private set; }
-
-        public string FloorStatus { get; private set; }
 
         public int MinFloor => 0;
         public int MaxFloor => 5;
@@ -29,12 +35,9 @@
                     await Task.Delay(MilisecondsBetweenFloors);
 
                     CurrentFloor += CurrentFloor < floor ? 1 : -1;
-                   
-                    if (CurrentFloor != floor) FloorStatus = "Intermediary";
-                    else FloorStatus = "Destination";
 
                     //This is how you should do it nowadays
-                    FloorReachedEvent?.Invoke(this, new FloorReachedEventArgs(CurrentFloor, FloorStatus)); 
+                    FloorReachedEvent?.Invoke(this, new FloorReachedEventArgs(CurrentFloor)); 
                 }
             });
         }
