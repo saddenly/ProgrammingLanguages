@@ -35,7 +35,7 @@
             var betterElevator = new BetterElevator();
             Console.WriteLine(betterElevator.CurrentFloor);
             betterElevator.FloorReachedEvent 
-                += (sender, eventArgs) => Console.WriteLine($"Floor {eventArgs.CurrentFloor}");
+                += (sender, eventArgs) => Console.WriteLine($"{eventArgs.FloorStatus} floor {eventArgs.CurrentFloor}");
             
             betterElevator.Move(5);
 

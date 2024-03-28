@@ -13,18 +13,28 @@ namespace DelegatesAndEvents
 
     public class Integrator
     {
-        public double StartingPoint { get; } = 0;
-        public double EndingPoint { get; } = 1;
-        public int Midpoints { get; } = 10;
+        public double StartingPoint { get; private set; }
+        public double EndingPoint { get; private set; }
+        public int Midpoints { get; private set; }
 
-        //public double Integrate(IntegrableFunction function)
+        public Integrator(double startingPoint, double endingPoint, int midpoints)
+        {
+            StartingPoint = startingPoint;
+            EndingPoint = endingPoint;
+            Midpoints = midpoints;
+        }
+
+        public void Configure(double start, double end, int midpoints)
+        {
+            if (start >= end) throw new ArgumentException("Start must be less than end");
+
+            StartingPoint = start;
+            EndingPoint = end;
+            Midpoints = midpoints;
+        }
+
         public double Integrate(Func<double, double> function)
         {
-            //double square(double x)
-            //{
-            //    return x * x;
-            //}
-
             var arguments = new double[Midpoints + 1];
             var values = new double[Midpoints + 1];
 

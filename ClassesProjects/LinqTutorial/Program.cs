@@ -19,6 +19,13 @@
 //Console.WriteLine(result3);
 
 //Homework - return from Aggregate a list of numbers which are bigger then average;
+var result4 = numbers1
+            .Where(x => x > numbers1.Aggregate((sum, next) => sum + next) / (double)numbers1.Count())
+            .ToList();
+foreach (var item in result4)
+{
+    Console.WriteLine(item);
+}
 
 var persons = new Person[] {
     new Person(1, "James", "Bond", 40, new [] { "Spying", "Women", "Cars" }),
