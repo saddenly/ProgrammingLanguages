@@ -61,7 +61,7 @@ internal class Program
 
         if (maybe is int number)
         {
-            Console.WriteLine($"The nullable int 'maybe' has the value {}");
+            Console.WriteLine($"The nullable int 'maybe' has the value {number}");
         }
         else
         {
@@ -73,8 +73,7 @@ internal class Program
         var result = string.Empty;
         if (tempInFahrenheit > 32 && tempInFahrenheit < 212)
             return "liquid";
-
-
+        return result;
     }
      
 
