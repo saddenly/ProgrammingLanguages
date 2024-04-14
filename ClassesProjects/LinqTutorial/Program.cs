@@ -1,4 +1,6 @@
-﻿List<int> numbers1 = new List<int> { 2, 5, 10, 12, 5, 1, 12, 2, 10, 11, 4, 100 };
+﻿using System.Net;
+
+List<int> numbers1 = new List<int> { 2, 5, 10, 12, 5, 1, 12, 2, 10, 11, 4, 100 };
 
 //var bigNumbers = numbers1.Where(x => x > 10);
 
@@ -70,20 +72,36 @@ var joiningPersonAndAddress =
 //}
 
 var groupJoined =
-    from person in persons
+    (from person in persons
     join address in addresses on person.Id equals address.PersonId into personAddresses
-    select new { Person = person, Addresses = personAddresses };
+    select new { Person = person, Addresses = personAddresses }).ToList();
 
-foreach (var item in groupJoined)
+//foreach (var item in groupJoined)
+//{
+//    Console.WriteLine(item.Person.FirstName + " " + item.Person.LastName);
+//    foreach (var address in item.Addresses)
+//    {
+//        Console.WriteLine($"   {address.City}");
+//    }
+//}
+
+var leftJoined =
+    (from person in persons
+     join address in addresses on person.Id equals address.PersonId into personAddresses
+     from personAddress in personAddresses.DefaultIfEmpty()
+     select new { Person = person, Address = personAddress }).ToList();
+
+foreach (var item in leftJoined)
 {
-    Console.WriteLine(item.Person.FirstName + " " + item.Person.LastName);
-    foreach (var address in item.Addresses)
+    if (item.Address != null)
     {
-        Console.WriteLine(address.City);
+        Console.WriteLine(item.Person.FirstName + " " + item.Person.LastName + " is from " + item.Address.City);
+    }
+    else
+    {
+        Console.WriteLine(item.Person.FirstName + " " + item.Person.LastName + " - he is no one knows from what city");
     }
 }
-
-
 
 
 //This is anonymous types usage:
